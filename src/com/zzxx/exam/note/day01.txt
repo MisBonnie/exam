@@ -1,0 +1,70 @@
+布局: 组件/控件 的排列方式 Layout
+    BorderLayout - 边框布局 麻将布局
+    FlowLayout - 流式布局, 默认布局
+    GridLayout - 网格布局
+        以上三个布局, 设置了以后, 组件大小不太好控制
+    自定义布局 - 没有布局
+
+组件: java.awt  javax.swing
+     JButton - 按钮
+     JCheckBox - 可以多选的勾选框, 复选框
+     JFrame - 窗口
+     JLabel - 显示标签, 文本/图标
+     JPanel - 画板
+     JRadioButton - 单选按钮, 配合 ButtonGroup
+     JTextField - 单行文本输入框
+     JTextArea - 多行文本域
+     JPasswordField - 单行密码输入框
+
+    通用方法:
+        void setText(String)
+        String getText()
+
+1.业务都有什么
+2.业务流程是什么, 用到了哪些组件, 找到他
+
+出试卷的时候:
+  1~10的难度级别, 每个难度级别, 出2道题
+登录:
+    1.LoginFrame界面
+    login.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+               // 点击登录按钮, 才能触发登录业务
+               controller.login();
+           }
+       });
+    2.控制器 ClientContext
+    public void login() {
+          // loginFrame 中获得 账号输入框 和 密码输入框的内容
+          String id = loginFrame.getIdField().getText();
+          String pwd = loginFrame.getPwdField().getText();
+          try {
+              service.login(id,pwd);
+              // 界面跳转
+              loginFrame.setVisible(false);
+              menuFrame.setVisible(true);
+          } catch (IdOrPwdException e) {
+              e.printStackTrace();
+              // 更新提示信息
+              loginFrame.updateMessage(e.getMessage());
+          }
+    }
+    3.业务模块-服务 ExamService
+    public User login(String id, String password) throws IdOrPwdException {
+        // 在这里写登录的过程
+        // 1.获得用户输入的账号, 密码
+        // 2.在模拟数据库中的users 查找有没有对应的User对象
+        Map<String, User> users = entityContext.getUsers();
+        // 3.如果有user, 密码正确, 登录成功, 界面跳转
+        User user = users.get(id);
+        if (user != null) {
+            // 判断密码
+            if (password.equals(user.getPassword())) {
+                return user;
+            }
+        }
+        // 4.如果有user, 密码不正确, 提示信息
+        // 5.没有user, 提示信息
+        throw new IdOrPwdException("编号/密码错误");
+    }
+    4.主程序 Main

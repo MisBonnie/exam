@@ -1,5 +1,7 @@
 package com.zzxx.exam.ui;
 
+import com.zzxx.exam.controller.ClientContext;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -32,7 +34,7 @@ public class LoginFrame extends JFrame {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-
+                System.exit(0);
             }
         });
     }
@@ -44,6 +46,11 @@ public class LoginFrame extends JFrame {
         p.add(BorderLayout.CENTER, createCenterPane());
         p.add(BorderLayout.SOUTH, createBtnPane());
         return p;
+    }
+    private ClientContext controller;
+
+    public void setController(ClientContext controller) {
+        this.controller = controller;
     }
 
     private JPanel createBtnPane() {
@@ -57,7 +64,8 @@ public class LoginFrame extends JFrame {
 
         login.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                // 点击登录按钮, 才能触发登录业务
+                controller.login();
             }
         });
 
@@ -84,13 +92,14 @@ public class LoginFrame extends JFrame {
         p.add(createPwdPane());
         return p;
     }
-
+    private JTextField idField;
+    private JTextField pwdField;
     private JPanel createIdPane() {
         JPanel p = new JPanel(new BorderLayout(6, 0));
         p.add(BorderLayout.WEST, new JLabel("编号:"));
         JTextField idField = new JTextField();
+        this.idField = idField;
         p.add(BorderLayout.CENTER, idField);
-
         return p;
     }
 
@@ -101,6 +110,7 @@ public class LoginFrame extends JFrame {
         JPanel p = new JPanel(new BorderLayout(6, 0));
         p.add(BorderLayout.WEST, new JLabel("密码:"));
         JPasswordField pwdField = new JPasswordField();
+        this.pwdField = pwdField;
         pwdField.enableInputMethods(true);
         p.add(BorderLayout.CENTER, pwdField);
         return p;
@@ -108,5 +118,15 @@ public class LoginFrame extends JFrame {
 
     private JLabel message;
 
+    public JTextField getIdField() {
+        return idField;
+    }
 
+    public JTextField getPwdField() {
+        return pwdField;
+    }
+
+    public void updateMessage(String message) {
+        this.message.setText(message);
+    }
 }

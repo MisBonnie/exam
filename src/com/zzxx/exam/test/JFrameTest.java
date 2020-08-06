@@ -17,6 +17,7 @@ public class JFrameTest {
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel(ico);
 		panel.add(label);
+		// 功能等同于 frame.add(panel)
 		frame.setContentPane(panel);
 		frame.setSize(640, 640);
 		frame.setVisible(true);

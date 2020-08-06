@@ -7,5 +7,8 @@ public class ConfigTest {
 		Config config = new Config("config.properties");
 		int timeLimit = config.getInt("TimeLimit");
 		System.out.println(timeLimit);
+
+		String ruleFile = config.getString("ExamRule");
+		System.out.println(ruleFile);
 	}
 }

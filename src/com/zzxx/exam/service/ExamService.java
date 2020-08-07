@@ -1,8 +1,8 @@
 package com.zzxx.exam.service;
 
-import com.zzxx.exam.entity.EntityContext;
-import com.zzxx.exam.entity.User;
+import com.zzxx.exam.entity.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,17 +14,13 @@ public class ExamService {
         // 在这里写登录的过程
         // 1.获得用户输入的账号, 密码
         // 2.在模拟数据库中的users 查找有没有对应的User对象
-        Map<String, User> users = entityContext.getUsers();
+        User user = entityContext.findUserById(Integer.valueOf(id));
         // 3.如果有user, 密码正确, 登录成功, 界面跳转
-        User user = users.get(id);
-        /*if (user != null) {
+        if (user != null) {
             // 判断密码
             if (password.equals(user.getPassword())) {
                 return user;
             }
-        }*/
-        if (id.equals("1234") && password.equals("1111")){
-            return null;
         }
         // 4.如果有user, 密码不正确, 提示信息
         // 5.没有user, 提示信息
@@ -33,5 +29,31 @@ public class ExamService {
 
     public void setEntityContext(EntityContext entityContext) {
         this.entityContext = entityContext;
+    }
+
+    public ExamInfo startExam(User user) {
+        ExamInfo info = new ExamInfo();
+//        info.setTimeLimit(文件中读取的);
+//        info.setQuestionCount(文件中读取的);
+//        info.setTitle(文件中读取的);
+        info.setUser(user);
+
+        // 生成一套试卷
+        createExamPaper();
+        return info;
+    }
+    // 定义一套试卷
+    private List<QuestionInfo> paper;
+
+    private void createExamPaper() {
+        for (int i = Question.LEVEL1; i <= Question.LEVEL10 ; i++) {
+            // 获得难度级别对应的所有试题
+            List<Question> questions = entityContext.findQuestionsByLevel(i);
+            // 随机获得两个试题对象, 并且加入到paper中
+        }
+    }
+
+    public Question getQuestionFormPaper(int i) {
+        return paper.get(i).getQuestion();
     }
 }

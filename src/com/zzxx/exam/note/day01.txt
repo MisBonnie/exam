@@ -28,11 +28,11 @@
 登录:
     1.LoginFrame界面
     login.addActionListener(new ActionListener() {
-           public void actionPerformed(ActionEvent e) {
-               // 点击登录按钮, 才能触发登录业务
-               controller.login();
-           }
-       });
+       public void actionPerformed(ActionEvent e) {
+           // 点击登录按钮, 才能触发登录业务
+           controller.login();
+       }
+    });
     2.控制器 ClientContext
     public void login() {
           // loginFrame 中获得 账号输入框 和 密码输入框的内容

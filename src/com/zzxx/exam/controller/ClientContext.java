@@ -1,5 +1,8 @@
 package com.zzxx.exam.controller;
 
+import com.zzxx.exam.entity.ExamInfo;
+import com.zzxx.exam.entity.Question;
+import com.zzxx.exam.entity.User;
 import com.zzxx.exam.service.ExamService;
 import com.zzxx.exam.service.IdOrPwdException;
 import com.zzxx.exam.ui.*;
@@ -18,12 +21,13 @@ public class ClientContext {
     public void startShow() {
         loginFrame.setVisible(true);
     }
+    private User user; // 记录登录的用户
     public void login() {
         // loginFrame 中获得 账号输入框 和 密码输入框的内容
         String id = loginFrame.getIdField().getText();
         String pwd = loginFrame.getPwdField().getText();
         try {
-            service.login(id,pwd);
+            user = service.login(id,pwd);
             // 界面跳转
             loginFrame.setVisible(false);
             menuFrame.setVisible(true);
@@ -56,5 +60,25 @@ public class ClientContext {
 
     public void setService(ExamService service) {
         this.service = service;
+    }
+    /*
+        控制器开始考试的方法
+     */
+    public void start() {
+        // 1.界面 菜单界面-隐藏, 考试界面-显示
+        // 2.生成考试信息, 以及试卷->List<Question>
+        // ExamInfo -> 业务模块生成的
+        // 试卷中的一道题目 -> 第一题
+        ExamInfo info = service.startExam(user);
+        currentQuestion = service.getQuestionFormPaper(0);
+        // 3.更新考试界面
+    }
+    private Question currentQuestion;
+    private int questionIndex = 0;
+    public void next() {
+        questionIndex ++;
+        currentQuestion = service.getQuestionFormPaper(questionIndex);
+        // 1.更新界面
+        // 2.记录当前这道题的用户答案
     }
 }

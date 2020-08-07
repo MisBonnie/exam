@@ -1,5 +1,7 @@
 package com.zzxx.exam.ui;
 
+import com.zzxx.exam.controller.ClientContext;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -54,6 +56,11 @@ public class MenuFrame extends JFrame {
 
         return pane;
     }
+    private ClientContext controller;
+
+    public void setController(ClientContext controller) {
+        this.controller = controller;
+    }
 
     private JPanel createBtnPane() {
         JPanel pane = new JPanel(new FlowLayout());
@@ -71,7 +78,8 @@ public class MenuFrame extends JFrame {
 
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                // 通知控制器 开始考试
+                controller.start();
             }
         });
 

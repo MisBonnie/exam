@@ -3,6 +3,7 @@ package com.zzxx.exam;
 import com.zzxx.exam.controller.ClientContext;
 import com.zzxx.exam.entity.EntityContext;
 import com.zzxx.exam.service.ExamService;
+import com.zzxx.exam.ui.ExamFrame;
 import com.zzxx.exam.ui.LoginFrame;
 import com.zzxx.exam.ui.MenuFrame;
 
@@ -11,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
         LoginFrame loginFrame = new LoginFrame();
         MenuFrame menuFrame = new MenuFrame();
+        ExamFrame examFrame = new ExamFrame();
         ClientContext controller = new ClientContext();
         ExamService service = new ExamService();
         EntityContext entityContext = new EntityContext();
@@ -18,7 +20,9 @@ public class Main {
         // 注入依赖
         controller.setLoginFrame(loginFrame);
         controller.setMenuFrame(menuFrame);
+        controller.setExamFrame(examFrame);
         loginFrame.setController(controller);
+        menuFrame.setController(controller);
         controller.setService(service);
         service.setEntityContext(entityContext);
 

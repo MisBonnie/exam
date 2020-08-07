@@ -1,5 +1,6 @@
 package com.zzxx.exam.util;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -11,7 +12,7 @@ public class Config {
 
     public Config(String file) {
         try {
-            pro.load(Config.class.getResourceAsStream(file));
+            pro.load(new FileReader(Config.class.getResource(file).getFile()));
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

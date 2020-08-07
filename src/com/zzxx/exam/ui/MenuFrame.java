@@ -1,6 +1,7 @@
 package com.zzxx.exam.ui;
 
 import com.zzxx.exam.controller.ClientContext;
+import com.zzxx.exam.entity.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,7 +46,9 @@ public class MenuFrame extends JFrame {
 
         return pane;
     }
+
     private JLabel info; // 记录用户的信息
+
     private JPanel createMenuPane() {
         JPanel pane = new JPanel(new BorderLayout());
         // 务必将 info 引用到界面控件对象
@@ -56,6 +59,7 @@ public class MenuFrame extends JFrame {
 
         return pane;
     }
+
     private ClientContext controller;
 
     public void setController(ClientContext controller) {
@@ -112,6 +116,7 @@ public class MenuFrame extends JFrame {
         return button;
     }
 
-
-
+    public void updateView(User user) {
+        info.setText(user.getName() + " 同学您好!");
+    }
 }

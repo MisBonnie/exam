@@ -47,6 +47,7 @@ public class LoginFrame extends JFrame {
         p.add(BorderLayout.SOUTH, createBtnPane());
         return p;
     }
+
     private ClientContext controller;
 
     public void setController(ClientContext controller) {
@@ -92,8 +93,10 @@ public class LoginFrame extends JFrame {
         p.add(createPwdPane());
         return p;
     }
+
     private JTextField idField;
     private JTextField pwdField;
+
     private JPanel createIdPane() {
         JPanel p = new JPanel(new BorderLayout(6, 0));
         p.add(BorderLayout.WEST, new JLabel("编号:"));

@@ -1,5 +1,8 @@
 package com.zzxx.exam.ui;
 
+import com.zzxx.exam.entity.ExamInfo;
+import com.zzxx.exam.entity.QuestionInfo;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -45,12 +48,14 @@ public class ExamFrame extends JFrame {
         return pane;
     }
 
+    private JLabel examInfo;
+
     private JPanel createCenterPane() {
         JPanel pane = new JPanel(new BorderLayout());
         // 注意!
         JLabel examInfo = new JLabel("姓名:XXX 考试:XXX 考试时间:XXX", JLabel.CENTER);
+        this.examInfo = examInfo;
         pane.add(BorderLayout.NORTH, examInfo);
-
         pane.add(BorderLayout.CENTER, createQuestionPane());
         pane.add(BorderLayout.SOUTH, createOptionsPane());
         return pane;
@@ -132,6 +137,12 @@ public class ExamFrame extends JFrame {
         return pane;
     }
 
+    public void updateView(ExamInfo examInfo, QuestionInfo currentQuestionInfo) {
+        this.examInfo.setText(examInfo.toString());
+        questionArea.setText(currentQuestionInfo.toString());
+        questionCount.setText("题目:" + examInfo.getQuestionCount() + " 的 " + (currentQuestionInfo.getQuestionIndex() + 1) + "题");
+    }
+
     /**
      * 使用内部类扩展了 JCheckBox 增加了val 属性, 代表答案值
      */
@@ -163,6 +174,5 @@ public class ExamFrame extends JFrame {
         }
         timer.setText(time);
     }
-
 
 }
